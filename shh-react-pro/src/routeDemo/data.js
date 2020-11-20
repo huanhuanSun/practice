@@ -1,0 +1,31 @@
+let datas=[
+    {
+        id:'1',
+        content:'内容1'
+    },
+    {
+        id:'2',
+        content:'内容2'
+    },
+    {
+        id:'3',
+        content:'内容3'
+    },
+    {
+        id:'4',
+        content:'内容4'
+    },
+    {
+        id:'5',
+        content:'内容5'
+    },
+    {
+        id:'6',
+        content:'内容6'
+    },
+    {
+        id:'7',
+        content:'内容7'
+    },
+]
+export default datas

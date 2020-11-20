@@ -1,0 +1,33 @@
+.alert{
+    width: 500px;
+    left:calc(50% - 250px);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid #ddd;
+}
+.alert-header{
+    text-align: center;
+    font: italic bold 12px/30px arial,sans-serif;
+    
+}
+
+.close{
+    background: #ddd;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    line-height: 20px;
+}
+.close:after{
+    content: '\2716';
+    width: 20px;
+    height: 20px;
+    display: block;
+    text-align: center;
+    color: #fff;
+}
