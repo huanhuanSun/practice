@@ -1,8 +1,11 @@
 https://blog.csdn.net/qzw752890913/article/details/106245718
 
 将项目dynamic-smooth-line推入远程仓CodeMarket
+
 dynamic-smooth-line 上一级目录 js 经 git init 成为 git仓
+
 js目录 下会生成 .git目录，删除.git 相当于 撤销 git init
+
 在这里插入图片描述
 进入dynamic-smooth-line，，经git add、git commit、git push将该所需文件推入远程仓CodeMarket
 在这里插入图片描述
