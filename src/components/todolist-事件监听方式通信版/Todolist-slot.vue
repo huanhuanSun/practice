@@ -1,17 +1,11 @@
 <template>
     <div>
-        <Header :addTodo="addTodo"/>
+        <Header ref="header"/>
         <Main 
             :todolist="todolist" 
-            :undolist="handleTodos(true)" 
-            :donelist="handleTodos()" 
-            :toggleDone="toggleDone" 
-            :removeTodo="removeTodo"
         />
-        <Footer 
-            :removeDoneTodos="removeDoneTodos" 
+        <Footer
             :todos="todolist" 
-            :selectAll="selectAll"
         />
     </div>
 </template>
@@ -28,20 +22,37 @@
             Main,
             Footer
         },
+        //
+        mounted(){
+            //模拟异步读取todo数据
+            setTimeout(()=>{
+                const todos = JSON.parse(localStorage.getItem('todos') || '[]') 
+                console.log(todos)
+                this.todolist = todos;
+            },1000)            
+            //绑定自定义事件监听
+            this.$refs.header.$on('addData',this.addTodo)
+            //绑定自定义事件监听(removeData)
+            this.$bus.$on('removeData',this.removeTodo);
+            //removeAllDone 事件监听
+            this.$bus.$on('removeAllDone',this.removeDoneTodos)
+            //toggleDone todo的toggle状态 事件监听
+            this.$bus.$on('toggleDone',this.toggleDone)
+            // selectAll  全选/取消 的事件监听
+            this.$bus.$on('checkAll',this.selectAll)
+        },
+        //
+        beforeDestroy(){
+            //移除事件监听
+            this.$bus.$off('removeData');
+            this.$refs.header.$off('addData');
+            this.$bus.$off('removeAllDone');
+            this.$bus.$off('toggleDone');
+            this.$bus.$off('checkAll')
+        },
         data(){
             return{
-                todolist:[
-                    {
-                        id:1,
-                        content:'lala',
-                        done:true
-                    },
-                    {
-                        id:2,
-                        content:'lulu',
-                        done:false
-                    }
-                ],
+                todolist:[],
             }
         },
         methods: {
@@ -57,22 +68,18 @@
             //添加数据
             addTodo(todo){
                 this.todolist.unshift(todo)
-                console.log(this.todolist)
             },
             //删除数据
             deleteTodo(param){
-                // console.log(param.id)
                 this.todolist = this.todolist.filter(todo=>todo.id!==param.id)
             },
             //编辑todo状态
             toggleDone(todo){
-                // console.log(todo)
                 todo.done = !todo.done
             },
 
             //删除todo
             removeTodo(id){
-                console.log(id)
                 this.todolist = this.todolist.filter(item=>item.id!==id)
             },
 
@@ -85,7 +92,16 @@
             selectAll(val){
                 this.todolist.forEach(v=>v.done = val)
             },
-
+        },
+        watch:{
+            todolist:{
+                deep:true,//深度监视
+                handler:function(val){// todos 发生改变的回调函数
+                    // console.log(val)
+                    //保存最新的todos到localstorage中
+                    localStorage.setItem('todos',JSON.stringify(val))
+                }
+            }
         },
     }
 </script>

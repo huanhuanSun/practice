@@ -13,12 +13,11 @@
     export default {
         props:{
             todo:Object,
-            toggleDone:Function,
-            removeTodo:Function
         },
         methods: {
             remove(){
-                this.removeTodo(this.todo.id)
+                //事件分发
+                this.$bus.$emit('removeData',this.todo.id)
             }
         },
         computed: {
@@ -27,7 +26,7 @@
                     return this.todo.done
                 },
                 set(){
-                    this.toggleDone(this.todo)
+                    this.$bus.$emit('toggleDone',this.todo)
                 }
             }
         }

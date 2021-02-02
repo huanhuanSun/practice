@@ -34,7 +34,8 @@
                     content:this.newTodo,
                     done:false
                 }
-                this.addTodo(todo)
+                //自定义事件监听
+                this.$emit('addData',todo)
                 this.newTodo = '';
             }
         },

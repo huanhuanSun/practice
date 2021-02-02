@@ -7,29 +7,24 @@
         <div class="my_footer">
             <span>
                 <input type="checkbox" v-model="checkAll"> 全选/取消
-            </span>
-            
+            </span>            
             <span class="footer_center">
                 已完成{{doneSize}}项/共{{todos.length}}项
             </span>
             <button @click="removeAll">清除所有已完成</button>
-
-        </div>
-        
+        </div>        
     </footer>
 </template>
 
 <script>
     export default {
-        //props:['removeDoneTodos','todos','selectAll'],
         props:{
-            removeDoneTodos:Function,
             todos:Array,
             selectAll:Function,
         },
         methods: {
             removeAll(){
-                this.removeDoneTodos()
+                this.$bus.$emit('removeAllDone')
             }
         },
         computed: {
@@ -46,7 +41,8 @@
                 },
                 //get  当全选按钮选中时，要将所有的todo的done属性都改为true， 反之，都改为false
                 set(value){
-                    this.selectAll(value)
+                    //this.selectAll(value)
+                    this.$bus.$emit('checkAll',value)
                 } 
             }
         }

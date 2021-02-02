@@ -10,8 +10,6 @@
                 :key="todo.id" 
                 :class="[todo.done?'red':'']" 
                 :todo="todo"
-                :toggleDone="toggleDone"
-                :removeTodo="removeTodo"
             />
         </ol>
         <h2>已经完成
@@ -22,9 +20,7 @@
                 v-for="todo in donelist" 
                 :key="todo.id" 
                 :class="[todo.done?'red':'']" 
-                :todo="todo" 
-                :toggleDone="toggleDone"
-                :removeTodo="removeTodo"
+                :todo="todo"
             />
         </ul>
     </section>
@@ -33,8 +29,16 @@
 <script>
     import todoLiItem from './Li.vue'
     export default {
-    components: { todoLiItem },
-        props:['todolist','donelist','undolist','toggleDone','removeTodo'],
+        components: { todoLiItem },
+        props:['todolist',],
+        computed: {
+            undolist(){
+                return this.todolist.filter(v=>!v.done)
+            },
+            donelist(){
+                return this.todolist.filter(v=>v.done)
+            }
+        }
     }
 </script>
 
